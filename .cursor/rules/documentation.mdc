@@ -1,0 +1,21 @@
+---
+description: How to write docs; index at documentation.md; same-change updates
+alwaysApply: true
+---
+
+## Documentation
+
+### Using `docs/`
+
+- **Substance** in **`docs/`**; **index and inventory**: **`docs/documentation.md`**. **Types vs migrations** workflow: opening of **`docs/database.md`**.
+- **Same change as code**: If behavior documented in any file listed in **`docs/documentation.md`** changes, **update that doc in the same change** (pick the file using the index row).
+
+### How to write `docs/`
+
+- **Why**: Durable context for **agents**; humans approve what is recorded. Document **decisions and hard constraints** an agent would not reliably infer from code or remember long-term—not tutorials, onboarding stories, or **mirrors of repo structure** (routes, inventories of files or folders, etc.); those stay in code. Capture what the code does **not** spell out.
+- **Form**: **Tight and skimmable**—bullets, tables, minimal prose. **One fact, one owner**; in another doc, **link** to the owner instead of repeating.
+- **Openings**: Describe **what the file contains**. Do **not** catalog everything the file omits; only call out a **clear exception** when a boundary would otherwise blur (e.g. where authorization trust vs architecture lives).
+- **`docs/documentation.md`**: **Meta only**—why docs exist, full file index, inventory rule, maintenance. **Do not** put product or stack substance there unless it is about the doc system itself (substantive workflows belong in topic docs).
+- **Cross-links**: **`docs/` → `docs/`** is fine. **Never** reference **`.cursor/rules/`** from inside `docs/` (rules point at docs; readers of docs are not assumed to use Cursor).
+- **New file**: Any new **`docs/*.md`** → add a row to the table in **`docs/documentation.md`** in the **same change** (and extend inventory rules if layout changes, e.g. subfolders).
+- **Rules vs docs**: Keep **`.cursor/rules/`** short—pointers and constraints that cannot live in `docs/`. **Do not** copy long passages from `docs/` into rules.
