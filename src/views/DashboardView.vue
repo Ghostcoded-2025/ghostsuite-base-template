@@ -2,6 +2,7 @@
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
+import GcCard from '@/components/ui/GcCard.vue'
 import { useAccountStore } from '@/stores/account'
 import { useSessionStore } from '@/stores/session'
 
@@ -30,41 +31,49 @@ const loadError = computed(() => {
 </script>
 
 <template>
-  <div class="mx-auto max-w-3xl px-4 py-10">
-    <h1 class="text-lg font-medium">
+  <div class="mx-auto min-w-0 w-full max-w-3xl px-4 py-8 sm:py-10">
+    <h1 class="text-lg font-medium text-gc-text">
       Dashboard
     </h1>
 
     <div
       v-if="isLoading"
-      class="mt-6 text-sm text-gray-600"
+      class="mt-6 text-sm text-gc-muted"
     >
       Loading…
     </div>
 
     <div
       v-else-if="loadError"
-      class="mt-6 text-sm text-red-600"
+      class="mt-6 text-sm text-red-400"
     >
       {{ loadError }}
     </div>
 
-    <dl
+    <div
       v-else
-      class="mt-6 space-y-2 text-sm"
+      class="mt-6"
     >
-      <div v-if="email">
-        <dt class="text-gray-600">
-          Email
-        </dt>
-        <dd>{{ email }}</dd>
-      </div>
-      <div v-if="fullName">
-        <dt class="text-gray-600">
-          Name
-        </dt>
-        <dd>{{ fullName }}</dd>
-      </div>
-    </dl>
+      <GcCard>
+        <dl class="space-y-3 text-sm">
+          <div v-if="email">
+            <dt class="text-gc-muted">
+              Email
+            </dt>
+            <dd class="text-gc-text">
+              {{ email }}
+            </dd>
+          </div>
+          <div v-if="fullName">
+            <dt class="text-gc-muted">
+              Name
+            </dt>
+            <dd class="text-gc-text">
+              {{ fullName }}
+            </dd>
+          </div>
+        </dl>
+      </GcCard>
+    </div>
   </div>
 </template>

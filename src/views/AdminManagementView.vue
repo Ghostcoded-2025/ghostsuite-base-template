@@ -2,6 +2,7 @@
 import { onMounted, ref } from 'vue'
 
 import AdminManagePermissionsModal from '@/components/AdminManagePermissionsModal.vue'
+import GcButton from '@/components/ui/GcButton.vue'
 import { adminAPI, type AdminUserRow } from '@/lib/admin'
 import { authAPI } from '@/lib/auth'
 import { useSessionStore } from '@/stores/session'
@@ -79,14 +80,14 @@ function isCurrentUserRow(u: AdminUserRow): boolean {
 </script>
 
 <template>
-  <div class="mx-auto max-w-4xl px-4 py-10">
+  <div class="mx-auto min-w-0 w-full max-w-4xl px-4 py-8 sm:py-10">
     <div class="flex flex-wrap items-center justify-between gap-4">
-      <h1 class="text-lg font-medium">
+      <h1 class="text-lg font-medium text-gc-text">
         Admin management
       </h1>
       <router-link
         to="/admin"
-        class="text-sm text-gray-600 hover:text-gray-900"
+        class="text-sm text-gc-muted hover:text-gc-text"
       >
         ← Admin home
       </router-link>
@@ -96,35 +97,35 @@ function isCurrentUserRow(u: AdminUserRow): boolean {
       <div>
         <label
           for="admin-management-search"
-          class="block text-xs font-medium text-gray-600"
+          class="block text-xs font-medium text-gc-muted"
         >Search email</label>
         <input
           id="admin-management-search"
           v-model="search"
           type="search"
-          class="mt-1 w-56 rounded-md border border-gray-300 px-2 py-1.5 text-sm"
+          class="mt-1 w-56 rounded-lg border border-gc-border bg-gc-bg px-2 py-1.5 text-sm text-gc-text placeholder:text-gc-muted"
           @keydown.enter="load"
         >
       </div>
-      <button
+      <GcButton
         type="button"
-        class="rounded-md bg-gray-900 px-3 py-1.5 text-sm text-white hover:bg-gray-800"
+        variant="primary"
         @click="load"
       >
         Search
-      </button>
+      </GcButton>
     </div>
 
     <div
       v-if="isLoading"
-      class="mt-6 text-sm text-gray-600"
+      class="mt-6 text-sm text-gc-muted"
     >
       Loading…
     </div>
 
     <div
       v-else-if="loadError"
-      class="mt-6 text-sm text-red-600"
+      class="mt-6 text-sm text-red-400"
     >
       {{ loadError }}
     </div>
@@ -135,7 +136,7 @@ function isCurrentUserRow(u: AdminUserRow): boolean {
     >
       <table class="min-w-full text-left text-sm">
         <thead>
-          <tr class="border-b border-gray-200 text-gray-600">
+          <tr class="border-b border-gc-border text-gc-muted">
             <th class="py-2 pr-4 font-medium">
               Email
             </th>
@@ -152,21 +153,21 @@ function isCurrentUserRow(u: AdminUserRow): boolean {
           <tr
             v-for="u in users"
             :key="u.id"
-            class="border-b border-gray-100"
+            class="border-b border-gc-border/60"
           >
-            <td class="py-2 pr-4">
+            <td class="py-2 pr-4 text-gc-text">
               {{ u.email }}
             </td>
-            <td class="py-2 pr-4 text-gray-700">
+            <td class="py-2 pr-4 text-gc-muted">
               {{ u.full_name ?? '—' }}
             </td>
-            <td class="py-2 pr-4 text-gray-700">
+            <td class="py-2 pr-4 text-gc-muted">
               {{ u.roles.length ? u.roles.join(', ') : '—' }}
             </td>
             <td class="py-2">
               <button
                 type="button"
-                class="text-indigo-600 hover:text-indigo-800 disabled:cursor-not-allowed disabled:text-gray-400"
+                class="text-gc-accent hover:underline disabled:cursor-not-allowed disabled:text-gc-muted"
                 :disabled="isCurrentUserRow(u)"
                 @click="openModal(u)"
               >
@@ -180,13 +181,13 @@ function isCurrentUserRow(u: AdminUserRow): boolean {
 
     <p
       v-if="saveError"
-      class="mt-4 text-sm text-red-600"
+      class="mt-4 text-sm text-red-400"
     >
       {{ saveError }}
     </p>
     <p
       v-if="isSaving"
-      class="mt-2 text-sm text-gray-600"
+      class="mt-2 text-sm text-gc-muted"
     >
       Saving…
     </p>

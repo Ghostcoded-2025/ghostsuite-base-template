@@ -2,3 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  :root,
+  .theme-dark {
+    color-scheme: dark;
+    --gc-bg: 10 10 11;
+    --gc-surface: 18 18 20;
+    --gc-surface-hover: 26 26 29;
+    --gc-border: 42 42 46;
+    --gc-text: 244 244 245;
+    --gc-muted: 161 161 170;
+    --gc-accent: 45 212 191;
+    --gc-accent-muted: 13 148 136;
+    --gc-danger: 248 113 113;
+    --gc-on-accent: 10 10 11;
+  }
+
+  .theme-light {
+    color-scheme: light;
+    --gc-bg: 250 250 250;
+    --gc-surface: 255 255 255;
+    --gc-surface-hover: 244 244 245;
+    --gc-border: 228 228 231;
+    --gc-text: 24 24 27;
+    --gc-muted: 113 113 122;
+    --gc-accent: 13 148 136;
+    --gc-accent-muted: 15 118 110;
+    --gc-danger: 220 38 38;
+    --gc-on-accent: 250 250 250;
+  }
+
+  html {
+    height: 100%;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  body {
+    margin: 0;
+    height: 100%;
+    height: 100dvh;
+    max-height: 100dvh;
+    overflow-x: clip;
+    overflow-y: hidden;
+    padding-left: max(0.75rem, env(safe-area-inset-left, 0px));
+    padding-right: max(0.75rem, env(safe-area-inset-right, 0px));
+  }
+
+  #app {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  *:focus-visible {
+    @apply outline-none ring-2 ring-gc-accent ring-offset-2 ring-offset-gc-bg;
+  }
+}

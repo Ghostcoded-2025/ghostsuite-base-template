@@ -8,6 +8,7 @@
 
 | Doc | When to read / update |
 | --- | --- |
+| **`docs/api.md`** | FastAPI layout under `api/`, local dev, FastAPI Cloud deploy, extending routers. |
 | **`docs/architecture.md`** | Layers, boundaries, where data flows (browser vs server paths). |
 | **`docs/database.md`** | `supabase.ts` vs migrations, behavior not in types, RLS/RBAC, `database.ts` aliases. |
 | **`docs/documentation.md`** | Changing how docs work; this index; ownership disputes. |

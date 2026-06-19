@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+
+import GcButton from '@/components/ui/GcButton.vue'
+import GcCard from '@/components/ui/GcCard.vue'
+import GcPasswordField from '@/components/ui/GcPasswordField.vue'
 import { authAPI } from '@/lib/auth'
 
 const email = ref('')
@@ -41,29 +45,28 @@ const handleRegister = async () => {
 </script>
 
 <template>
-  <div class="flex min-h-screen items-center justify-center px-4 py-12">
+  <div class="flex min-h-dvh items-center justify-center px-4 py-12">
     <div class="w-full max-w-sm space-y-6">
       <div>
-        <h1 class="text-lg font-medium">
+        <h1 class="text-lg font-medium text-gc-text">
           Create account
         </h1>
-        <p class="mt-1 text-sm text-gray-600">
+        <p class="mt-1 text-sm text-gc-muted">
           Sign up with email and password.
         </p>
       </div>
 
-      <div
-        v-if="isSignupSuccess"
-        class="space-y-4 rounded border border-gray-200 bg-white p-4 text-sm text-gray-700"
-      >
-        <p>Check your email to confirm your account if confirmation is enabled in Supabase.</p>
+      <GcCard v-if="isSignupSuccess">
+        <p class="text-sm text-gc-muted">
+          Check your email to confirm your account if confirmation is enabled in Supabase.
+        </p>
         <router-link
           to="/login"
-          class="text-gray-900 underline"
+          class="mt-3 inline-block text-sm text-gc-accent hover:underline"
         >
           Back to sign in
         </router-link>
-      </div>
+      </GcCard>
 
       <form
         v-else
@@ -73,7 +76,7 @@ const handleRegister = async () => {
         <div>
           <label
             for="fullName"
-            class="block text-sm text-gray-700"
+            class="block text-sm text-gc-muted"
           >Name (optional)</label>
           <input
             id="fullName"
@@ -81,13 +84,13 @@ const handleRegister = async () => {
             type="text"
             name="fullName"
             autocomplete="name"
-            class="mt-1 block w-full rounded border border-gray-300 px-3 py-2 text-sm"
+            class="mt-1 block w-full rounded-lg border border-gc-border bg-gc-bg px-3 py-2 text-sm text-gc-text placeholder:text-gc-muted"
           >
         </div>
         <div>
           <label
             for="email"
-            class="block text-sm text-gray-700"
+            class="block text-sm text-gc-muted"
           >Email</label>
           <input
             id="email"
@@ -96,63 +99,64 @@ const handleRegister = async () => {
             name="email"
             autocomplete="email"
             required
-            class="mt-1 block w-full rounded border border-gray-300 px-3 py-2 text-sm"
+            class="mt-1 block w-full rounded-lg border border-gc-border bg-gc-bg px-3 py-2 text-sm text-gc-text placeholder:text-gc-muted"
           >
         </div>
         <div>
           <label
             for="password"
-            class="block text-sm text-gray-700"
+            class="block text-sm text-gc-muted"
           >Password</label>
-          <input
-            id="password"
-            v-model="password"
-            type="password"
-            name="password"
-            autocomplete="new-password"
-            required
-            class="mt-1 block w-full rounded border border-gray-300 px-3 py-2 text-sm"
-          >
+          <div class="mt-1">
+            <GcPasswordField
+              id="password"
+              v-model="password"
+              autocomplete="new-password"
+              required
+              dense
+            />
+          </div>
         </div>
         <div>
           <label
             for="confirmPassword"
-            class="block text-sm text-gray-700"
+            class="block text-sm text-gc-muted"
           >Confirm password</label>
-          <input
-            id="confirmPassword"
-            v-model="confirmPassword"
-            type="password"
-            name="confirmPassword"
-            autocomplete="new-password"
-            required
-            class="mt-1 block w-full rounded border border-gray-300 px-3 py-2 text-sm"
-          >
+          <div class="mt-1">
+            <GcPasswordField
+              id="confirmPassword"
+              v-model="confirmPassword"
+              autocomplete="new-password"
+              required
+              dense
+            />
+          </div>
         </div>
 
         <p
           v-if="error"
-          class="text-sm text-red-600"
+          class="text-sm text-red-400"
         >
           {{ error }}
         </p>
 
-        <button
+        <GcButton
           type="submit"
+          variant="primary"
+          class="w-full"
           :disabled="isLoading"
-          class="w-full rounded border border-gray-900 bg-gray-900 px-3 py-2 text-sm text-white disabled:opacity-50"
         >
           {{ isLoading ? 'Creating account…' : 'Create account' }}
-        </button>
+        </GcButton>
       </form>
 
       <p
         v-if="!isSignupSuccess"
-        class="text-center text-sm text-gray-600"
+        class="text-center text-sm text-gc-muted"
       >
         <router-link
           to="/login"
-          class="underline"
+          class="text-gc-accent hover:underline"
         >
           Already have an account?
         </router-link>

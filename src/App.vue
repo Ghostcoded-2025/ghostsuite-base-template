@@ -3,6 +3,9 @@ import { storeToRefs } from 'pinia'
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { RouterView, useRoute, useRouter } from 'vue-router'
 
+import AppShellLayout from '@/components/AppShellLayout.vue'
+import AppLogo from '@/components/AppLogo.vue'
+import ThemeToggle from '@/components/ThemeToggle.vue'
 import { authAPI } from '@/lib/auth'
 import {
   publicNavPaths,
@@ -21,17 +24,27 @@ const { isAuthenticated, rolesLoaded, canAccessAdmin } =
 
 const isLoading = ref(true)
 
-const isLoginPage = computed(() => route.path === '/login')
-const isRegisterPage = computed(() => route.path === '/register')
-const showGuestNav = computed(
-  () =>
-    !isAuthenticated.value && publicNavPaths.has(route.path)
+const bareAuthPaths = new Set(['/login', '/register'])
+const isBareAuthPage = computed(() => bareAuthPaths.has(route.path))
+const showMainNav = computed(
+  () => publicNavPaths.has(route.path) && route.path !== '/install-app',
 )
+const showAppNav = computed(() => {
+  if (!isAuthenticated.value || isBareAuthPage.value) {
+    return false
+  }
+  if (route.path === '/') {
+    return false
+  }
+  return true
+})
 const showAdminNav = computed(
   () => rolesLoaded.value && canAccessAdmin.value
 )
 
 const showInstallNavLink = useShowInstallNavLink()
+
+let unsubscribeAuth: (() => void) | null = null
 
 async function bootstrapAuthenticated() {
   await Promise.all([
@@ -85,9 +98,12 @@ onMounted(async () => {
       replaceWithDashboardIfOnGuestAuthPath(router)
     })
   })
-  onUnmounted(() => {
-    subscription.unsubscribe()
-  })
+  unsubscribeAuth = () => { subscription.unsubscribe(); }
+})
+
+onUnmounted(() => {
+  unsubscribeAuth?.()
+  unsubscribeAuth = null
 })
 
 const handleSignOut = async () => {
@@ -103,91 +119,90 @@ const handleSignOut = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 text-gray-900">
+  <div class="flex min-h-0 flex-1 flex-col">
     <div
       v-if="isLoading"
-      class="min-h-screen flex items-center justify-center"
+      class="flex min-h-0 flex-1 flex-col items-center justify-center bg-gc-bg"
     >
-      <p class="text-sm text-gray-600">
+      <p class="text-sm text-gc-muted">
         Loading…
       </p>
     </div>
 
-    <div v-else>
-      <nav
-        v-if="
-          showGuestNav ||
-            (isAuthenticated && !isLoginPage && !isRegisterPage)
-        "
-        class="border-b border-gray-200 bg-white"
+    <div
+      v-else
+      class="relative flex min-h-0 flex-1 flex-col"
+    >
+      <div
+        v-if="isBareAuthPage"
+        class="pointer-events-none fixed right-4 top-4 z-50 pt-[env(safe-area-inset-top,0px)]"
       >
-        <div class="mx-auto flex h-14 max-w-3xl items-center justify-between px-4">
-          <template v-if="showGuestNav">
+        <div class="pointer-events-auto">
+          <ThemeToggle />
+        </div>
+      </div>
+
+      <AppShellLayout
+        v-if="showAppNav"
+        class="min-h-0 flex-1"
+        :show-admin="showAdminNav"
+        :show-install-link="showInstallNavLink"
+        @sign-out="handleSignOut"
+      >
+        <RouterView />
+      </AppShellLayout>
+
+      <div
+        v-else
+        class="flex min-h-0 flex-1 flex-col bg-gc-bg text-gc-text"
+      >
+        <nav
+          v-if="showMainNav"
+          class="border-b border-gc-border bg-gc-bg"
+        >
+          <div class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-4">
             <router-link
               to="/"
-              class="text-sm font-medium"
+              class="flex items-end gap-3 leading-none"
             >
-              App
+              <AppLogo height-class="h-9 sm:h-10" />
+              <span class="pb-0.5 text-[10px] font-medium uppercase tracking-wider text-gc-muted">
+                by Ghostcoded
+              </span>
             </router-link>
-            <div class="flex items-center gap-4 text-sm">
+            <div class="flex shrink-0 items-center gap-1 sm:gap-2">
+              <ThemeToggle />
               <router-link
                 v-if="showInstallNavLink"
                 to="/install-app"
-                class="text-gray-600 hover:text-gray-900"
+                class="rounded-lg px-3 py-2 text-sm text-gc-muted transition-colors hover:bg-gc-surface-hover hover:text-gc-text"
               >
                 Install app
               </router-link>
               <router-link
-                to="/login"
-                class="text-gray-600 hover:text-gray-900"
-              >
-                Login
-              </router-link>
-            </div>
-          </template>
-          <template v-else>
-            <router-link
-              to="/dashboard"
-              class="text-sm font-medium"
-            >
-              App
-            </router-link>
-            <div class="flex items-center gap-4 text-sm">
-              <router-link
+                v-if="isAuthenticated"
                 to="/dashboard"
-                class="text-gray-600 hover:text-gray-900"
+                class="rounded-lg border border-gc-accent px-3 py-2 text-sm font-medium text-gc-accent hover:bg-gc-accent/10"
               >
-                Dashboard
+                Go to app
               </router-link>
               <router-link
-                v-if="showInstallNavLink"
-                to="/install-app"
-                class="text-gray-600 hover:text-gray-900"
+                v-else
+                to="/login"
+                class="rounded-lg px-3 py-2 text-sm text-gc-muted transition-colors hover:bg-gc-surface-hover hover:text-gc-text"
               >
-                Install app
+                Sign in
               </router-link>
-              <router-link
-                v-if="showAdminNav"
-                to="/admin"
-                class="text-gray-600 hover:text-gray-900"
-              >
-                Admin
-              </router-link>
-              <button
-                type="button"
-                class="text-gray-600 hover:text-gray-900"
-                @click="handleSignOut"
-              >
-                Sign out
-              </button>
             </div>
-          </template>
-        </div>
-      </nav>
+          </div>
+        </nav>
 
-      <main>
-        <RouterView />
-      </main>
+        <main class="flex min-h-0 min-w-0 flex-1 flex-col overflow-x-hidden overflow-y-auto overscroll-y-contain">
+          <div class="flex min-h-0 min-w-0 w-full flex-1 flex-col">
+            <RouterView />
+          </div>
+        </main>
+      </div>
     </div>
   </div>
 </template>

@@ -23,7 +23,13 @@ This template uses a **manifest-only** PWA (no service worker). When you ship a 
 
 ## Styling
 
-- **`docs/styling.md`** — replace or rewrite with **your** theme, layout choices, and component class recipes. The template file documents the starter look (Tailwind defaults, example patterns); a real product should own its own styling doc so reuse and agent context match your brand.
+- **`src/components/AppLogo.vue`** — replace the placeholder logo with your product mark.
+- **`docs/styling.md`** — Ghostcoded **`gc-*`** theme is the default; adjust tokens or recipes when your fork diverges from the shared shell.
+
+## FastAPI (optional backend)
+
+- **`api/.env.example`** — copy to **`api/.env`**; set `CORS_ORIGINS` to your Vite dev URL and production frontend URL.
+- **`docs/api.md`** — local `fastapi dev` and FastAPI Cloud deploy from the `api/` directory.
 
 ## Supabase CLI / local stack
 

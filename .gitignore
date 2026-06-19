@@ -33,6 +33,13 @@ coverage
 .env
 .env.local
 .env.*.local
+api/.env
+api/.venv/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
 
 # Supabase
 .supabase

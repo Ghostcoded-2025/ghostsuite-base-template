@@ -195,27 +195,27 @@ async function runInstallPrompt() {
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+  <div class="min-h-dvh bg-gc-bg px-4 py-12 pb-[env(safe-area-inset-bottom)] sm:px-6 lg:px-8">
     <div class="mx-auto max-w-3xl">
       <div class="mb-8">
-        <h1 class="mb-3 text-3xl font-bold text-gray-900">
+        <h1 class="mb-3 text-3xl font-bold text-gc-text">
           Install Base Template on your device
         </h1>
-        <p class="max-w-2xl text-gray-600">
+        <p class="max-w-2xl text-gc-muted">
           Base Template is a progressive web app. You can add it to your home screen or install it
           like a native app—no app store required.
         </p>
         <div class="mt-4">
           <label
             for="install-scenario"
-            class="mb-1 block text-xs font-medium text-gray-600"
+            class="mb-1 block text-xs font-medium text-gc-muted"
           >
             View instructions for
           </label>
           <select
             id="install-scenario"
             v-model="selectedScenario"
-            class="block w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm text-gray-900 shadow-sm focus:border-brand-primary focus:outline-none focus:ring-1 focus:ring-brand-primary sm:w-72"
+            class="block w-full rounded-lg border border-gc-border bg-gc-bg px-3 py-2 text-sm text-gc-text sm:w-72"
           >
             <option value="auto">
               Auto-detect
@@ -253,17 +253,17 @@ async function runInstallPrompt() {
 
       <div
         v-if="deferredPrompt && !isStandalone"
-        class="card mb-8 rounded border border-gray-200 bg-white p-6 shadow-sm"
+        class="card mb-8 rounded border border-gc-border bg-gc-surface p-6 shadow-sm"
       >
-        <h2 class="mb-2 text-lg font-semibold text-gray-900">
+        <h2 class="mb-2 text-lg font-semibold text-gc-text">
           Install from your browser
         </h2>
-        <p class="text-gray-600">
+        <p class="text-gc-muted">
           Your browser can install this app directly.
         </p>
         <button
           type="button"
-          class="mt-3 inline-flex items-center rounded border border-gray-900 bg-gray-900 px-3 py-2 text-sm text-white disabled:opacity-50"
+          class="mt-3 inline-flex min-h-[44px] items-center rounded-lg border border-gc-accent bg-gc-accent px-3 py-2 text-sm font-medium text-gc-on-accent hover:bg-gc-accent/90 disabled:opacity-50"
           :disabled="installPromptLoading"
           @click="runInstallPrompt"
         >
@@ -273,12 +273,12 @@ async function runInstallPrompt() {
 
       <div
         v-if="isStandalone"
-        class="card mb-8 rounded border border-emerald-200 bg-emerald-50 p-6"
+        class="card mb-8 rounded-xl border border-emerald-500/40 bg-emerald-500/10 p-6"
       >
-        <h2 class="mb-2 text-lg font-semibold text-gray-900">
+        <h2 class="mb-2 text-lg font-semibold text-gc-text">
           You’re all set
         </h2>
-        <p class="text-gray-600">
+        <p class="text-gc-muted">
           It looks like Base Template is already installed and running in app mode on this device. You
           can launch it again from your home screen, app drawer, or dock.
         </p>
@@ -287,20 +287,20 @@ async function runInstallPrompt() {
       <div class="space-y-6">
         <section
           v-if="showIosSafari"
-          class="card rounded border border-gray-200 bg-white p-6 shadow-sm"
+          class="card rounded border border-gc-border bg-gc-surface p-6 shadow-sm"
         >
-          <h2 class="mb-3 text-xl font-semibold text-gray-900">
+          <h2 class="mb-3 text-xl font-semibold text-gc-text">
             iPhone or iPad (Safari)
           </h2>
-          <p class="mb-3 text-gray-600">
+          <p class="mb-3 text-gc-muted">
             On iOS, apps like Base Template can be installed from Safari using “Add to Home Screen”.
             If you are not already there, open
-            <span class="font-mono text-[0.8rem] text-gray-900">{{ siteOrigin }}</span>
+            <span class="font-mono text-[0.8rem] text-gc-text">{{ siteOrigin }}</span>
             in Safari first.
           </p>
-          <ol class="list-decimal space-y-2 pl-5 text-gray-600">
+          <ol class="list-decimal space-y-2 pl-5 text-gc-muted">
             <li>
-              Tap the three dots (<span class="font-medium text-gray-900">More</span>) button to reveal the full
+              Tap the three dots (<span class="font-medium text-gc-text">More</span>) button to reveal the full
               toolbar
               <img
                 :src="iosMoreIcon"
@@ -324,28 +324,28 @@ async function runInstallPrompt() {
                 alt="Add to Home Screen icon"
                 class="mr-1 inline-block h-4 w-auto align-middle"
               >
-              <span class="font-medium text-gray-900">Add to Home Screen</span>
+              <span class="font-medium text-gc-text">Add to Home Screen</span>
               .
             </li>
             <li>
               Tap
-              <span class="font-medium text-gray-900">Add</span>.
+              <span class="font-medium text-gc-text">Add</span>.
             </li>
           </ol>
         </section>
 
         <section
           v-else-if="showIosOther"
-          class="card rounded border border-gray-200 bg-white p-6 shadow-sm"
+          class="card rounded border border-gc-border bg-gc-surface p-6 shadow-sm"
         >
-          <h2 class="mb-3 text-xl font-semibold text-gray-900">
+          <h2 class="mb-3 text-xl font-semibold text-gc-text">
             iPhone or iPad (other browser)
           </h2>
-          <p class="mb-3 text-gray-600">
+          <p class="mb-3 text-gc-muted">
             iOS only lets you install web apps to the home screen from Safari.
           </p>
-          <ol class="list-decimal space-y-2 pl-5 text-gray-600">
-            <li>Copy this page’s address <span class="font-mono text-[0.8rem] text-gray-900">{{ siteOrigin }}</span>.</li>
+          <ol class="list-decimal space-y-2 pl-5 text-gc-muted">
+            <li>Copy this page’s address <span class="font-mono text-[0.8rem] text-gc-text">{{ siteOrigin }}</span>.</li>
             <li>
               Open Safari and paste the URL into the address bar.
             </li>
@@ -354,34 +354,34 @@ async function runInstallPrompt() {
 
         <section
           v-else-if="showAndroidChromeEdge"
-          class="card rounded border border-gray-200 bg-white p-6 shadow-sm"
+          class="card rounded border border-gc-border bg-gc-surface p-6 shadow-sm"
         >
-          <h2 class="mb-3 text-xl font-semibold text-gray-900">
+          <h2 class="mb-3 text-xl font-semibold text-gc-text">
             Android (Chrome or Edge)
           </h2>
-          <p class="mb-3 text-gray-600">
+          <p class="mb-3 text-gc-muted">
             Most Android browsers let you install Base Template so it behaves like a native app.
           </p>
-          <ol class="list-decimal space-y-2 pl-5 text-gray-600">
+          <ol class="list-decimal space-y-2 pl-5 text-gc-muted">
             <li>
-              Look for an <span class="font-medium text-gray-900">Install</span> or
-              <span class="font-medium text-gray-900">Add to Home screen</span> prompt near the address bar, or:
+              Look for an <span class="font-medium text-gc-text">Install</span> or
+              <span class="font-medium text-gc-text">Add to Home screen</span> prompt near the address bar, or:
             </li>
             <li>
               Open the browser menu
               <FontAwesomeIcon
                 icon="ellipsis-vertical"
-                class="mx-1 inline-block h-4 w-4 align-middle text-gray-600"
+                class="mx-1 inline-block h-4 w-4 align-middle text-gc-muted"
                 aria-hidden="true"
               />
               (three dots), then tap
-              <span class="font-medium text-gray-900">Install app</span> or
-              <span class="font-medium text-gray-900">Add to Home screen</span>.
-              On Edge you may see <span class="font-medium text-gray-900">Add to phone</span> instead.
+              <span class="font-medium text-gc-text">Install app</span> or
+              <span class="font-medium text-gc-text">Add to Home screen</span>.
+              On Edge you may see <span class="font-medium text-gc-text">Add to phone</span> instead.
             </li>
             <li>Confirm the install. Base Template will appear in your app drawer and on your home screen.</li>
           </ol>
-          <p class="mt-3 text-xs text-gray-500">
+          <p class="mt-3 text-xs text-gc-muted">
             If you don’t see the install option, make sure you’re online, using HTTPS, and have
             kept this page open for a few seconds.
           </p>
@@ -389,19 +389,19 @@ async function runInstallPrompt() {
 
         <section
           v-else-if="showAndroidOther"
-          class="card rounded border border-gray-200 bg-white p-6 shadow-sm"
+          class="card rounded border border-gc-border bg-gc-surface p-6 shadow-sm"
         >
-          <h2 class="mb-3 text-xl font-semibold text-gray-900">
+          <h2 class="mb-3 text-xl font-semibold text-gc-text">
             Android (other browser)
           </h2>
-          <p class="mb-3 text-gray-600">
+          <p class="mb-3 text-gc-muted">
             Some Android browsers have limited support for installing web apps.
           </p>
-          <ol class="list-decimal space-y-2 pl-5 text-gray-600">
+          <ol class="list-decimal space-y-2 pl-5 text-gc-muted">
             <li>
               Check the browser menu for an option like
-              <span class="font-medium text-gray-900">Install app</span> or
-              <span class="font-medium text-gray-900">Add to Home screen</span>.
+              <span class="font-medium text-gc-text">Install app</span> or
+              <span class="font-medium text-gc-text">Add to Home screen</span>.
             </li>
             <li>If you don’t see it, try opening this site in Chrome for the best install experience.</li>
           </ol>
@@ -409,15 +409,15 @@ async function runInstallPrompt() {
 
         <section
           v-else-if="showDesktopChrome"
-          class="card rounded border border-gray-200 bg-white p-6 shadow-sm"
+          class="card rounded border border-gc-border bg-gc-surface p-6 shadow-sm"
         >
-          <h2 class="mb-3 text-xl font-semibold text-gray-900">
+          <h2 class="mb-3 text-xl font-semibold text-gc-text">
             Desktop (Chrome)
           </h2>
-          <p class="mb-3 text-gray-600">
+          <p class="mb-3 text-gc-muted">
             You can install Base Template as a standalone app window on your computer.
           </p>
-          <ol class="list-decimal space-y-2 pl-5 text-gray-600">
+          <ol class="list-decimal space-y-2 pl-5 text-gc-muted">
             <li>
               Look for this install icon near the address bar:
               <img
@@ -427,30 +427,30 @@ async function runInstallPrompt() {
               >
             </li>
             <li>
-              Click it, then choose <span class="font-medium text-gray-900">Install</span> or
-              <span class="font-medium text-gray-900">Install Base Template</span>.
+              Click it, then choose <span class="font-medium text-gc-text">Install</span> or
+              <span class="font-medium text-gc-text">Install Base Template</span>.
             </li>
             <li>
               Base Template will open in its own window and can be pinned to your taskbar or dock like
               a regular app.
             </li>
             <li>
-              You may also see an <span class="font-medium text-gray-900">Install</span> control on this page when Chromium can install the site (same as the prompt above the steps, when it appears).
+              You may also see an <span class="font-medium text-gc-text">Install</span> control on this page when Chromium can install the site (same as the prompt above the steps, when it appears).
             </li>
           </ol>
         </section>
 
         <section
           v-else-if="showDesktopEdge"
-          class="card rounded border border-gray-200 bg-white p-6 shadow-sm"
+          class="card rounded border border-gc-border bg-gc-surface p-6 shadow-sm"
         >
-          <h2 class="mb-3 text-xl font-semibold text-gray-900">
+          <h2 class="mb-3 text-xl font-semibold text-gc-text">
             Desktop (Edge)
           </h2>
-          <p class="mb-3 text-gray-600">
+          <p class="mb-3 text-gc-muted">
             Microsoft Edge also lets you install Base Template as its own app window.
           </p>
-          <ol class="list-decimal space-y-2 pl-5 text-gray-600">
+          <ol class="list-decimal space-y-2 pl-5 text-gc-muted">
             <li>
               Look for this app icon near the address bar:
               <img
@@ -460,18 +460,18 @@ async function runInstallPrompt() {
               >
             </li>
             <li>
-              Click it, then choose <span class="font-medium text-gray-900">Install</span> or
-              <span class="font-medium text-gray-900">Install this site as an app</span>.
+              Click it, then choose <span class="font-medium text-gc-text">Install</span> or
+              <span class="font-medium text-gc-text">Install this site as an app</span>.
             </li>
             <li>
               Or open the menu
               <FontAwesomeIcon
                 icon="ellipsis-vertical"
-                class="mx-1 inline-block h-4 w-4 align-middle text-gray-600"
+                class="mx-1 inline-block h-4 w-4 align-middle text-gc-muted"
                 aria-hidden="true"
               />
-              and look for <span class="font-medium text-gray-900">Apps</span>
-              → <span class="font-medium text-gray-900">Install this site as an app</span>.
+              and look for <span class="font-medium text-gc-text">Apps</span>
+              → <span class="font-medium text-gc-text">Install this site as an app</span>.
             </li>
             <li>
               Base Template will open in its own window and can be pinned to your taskbar or Start
@@ -482,63 +482,63 @@ async function runInstallPrompt() {
 
         <section
           v-else-if="showDesktopSafari"
-          class="card rounded border border-gray-200 bg-white p-6 shadow-sm"
+          class="card rounded border border-gc-border bg-gc-surface p-6 shadow-sm"
         >
-          <h2 class="mb-3 text-xl font-semibold text-gray-900">
+          <h2 class="mb-3 text-xl font-semibold text-gc-text">
             Desktop (Safari)
           </h2>
-          <p class="mb-3 text-gray-600">
+          <p class="mb-3 text-gc-muted">
             Safari on macOS does not install progressive web apps the same way Chrome or Edge does on the desktop.
           </p>
-          <p class="text-gray-600">
+          <p class="text-gc-muted">
             Use Chrome or Edge on your computer to install Base Template, or open
-            <span class="font-mono text-[0.8rem] text-gray-900">{{ siteOrigin }}</span>
-            on an iPhone or iPad in Safari and use <span class="font-medium text-gray-900">Add to Home Screen</span> there.
+            <span class="font-mono text-[0.8rem] text-gc-text">{{ siteOrigin }}</span>
+            on an iPhone or iPad in Safari and use <span class="font-medium text-gc-text">Add to Home Screen</span> there.
           </p>
         </section>
 
         <section
           v-else-if="showDesktopFirefox"
-          class="card rounded border border-gray-200 bg-white p-6 shadow-sm"
+          class="card rounded border border-gc-border bg-gc-surface p-6 shadow-sm"
         >
-          <h2 class="mb-3 text-xl font-semibold text-gray-900">
+          <h2 class="mb-3 text-xl font-semibold text-gc-text">
             Desktop (Firefox)
           </h2>
-          <p class="mb-3 text-gray-600">
+          <p class="mb-3 text-gc-muted">
             Firefox on desktop has limited support for installing progressive web apps.
           </p>
-          <p class="text-gray-600">
+          <p class="text-gc-muted">
             Try Chrome or Edge to install Base Template on this computer, or use your phone’s browser and follow the Android or iPhone instructions above.
           </p>
         </section>
 
         <section
           v-else-if="showFallback || showDesktopOther"
-          class="card rounded border border-gray-200 bg-white p-6 shadow-sm"
+          class="card rounded border border-gc-border bg-gc-surface p-6 shadow-sm"
         >
-          <h2 class="mb-3 text-xl font-semibold text-gray-900">
+          <h2 class="mb-3 text-xl font-semibold text-gc-text">
             Using another browser
           </h2>
-          <p class="mb-3 text-gray-600">
+          <p class="mb-3 text-gc-muted">
             Your browser may have limited support for installing progressive web apps.
           </p>
-          <ol class="list-decimal space-y-2 pl-5 text-gray-600">
+          <ol class="list-decimal space-y-2 pl-5 text-gc-muted">
             <li>
               Check your browser’s menu for options like
-              <span class="font-medium text-gray-900">Install</span>,
-              <span class="font-medium text-gray-900">Install app</span>,
-              <span class="font-medium text-gray-900">Add to Home screen</span>, or
-              <span class="font-medium text-gray-900">Add to phone</span>.
+              <span class="font-medium text-gc-text">Install</span>,
+              <span class="font-medium text-gc-text">Install app</span>,
+              <span class="font-medium text-gc-text">Add to Home screen</span>, or
+              <span class="font-medium text-gc-text">Add to phone</span>.
             </li>
             <li>
               If you don’t see any install option, try opening
-              <span class="font-mono text-[0.8rem] text-gray-900">{{ siteOrigin }}</span>
+              <span class="font-mono text-[0.8rem] text-gc-text">{{ siteOrigin }}</span>
               in Chrome, Edge, or Safari (on iOS) for the best experience.
             </li>
           </ol>
-          <p class="mt-3 text-sm text-gray-600">
+          <p class="mt-3 text-sm text-gc-muted">
             In general, open
-            <span class="font-mono text-[0.8rem] text-gray-900">{{ siteOrigin }}</span>
+            <span class="font-mono text-[0.8rem] text-gc-text">{{ siteOrigin }}</span>
             in a recent Chrome, Edge, or mobile Safari and look in the menu or address bar for an install or “add to home” option.
           </p>
         </section>

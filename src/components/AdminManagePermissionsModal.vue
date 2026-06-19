@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 
+import GcButton from '@/components/ui/GcButton.vue'
 import type { AdminUserRow } from '@/lib/admin'
 
 const props = defineProps<{
@@ -82,26 +83,26 @@ function handleSave() {
 <template>
   <div
     v-if="open && user"
-    class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4"
+    class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
     role="dialog"
     aria-modal="true"
     aria-labelledby="perm-modal-title"
     @click.self="handleClose"
   >
-    <div class="max-h-[90vh] w-full max-w-md overflow-auto rounded-lg bg-white p-6 shadow-lg">
+    <div class="max-h-[90vh] w-full max-w-md overflow-auto rounded-xl border border-gc-border bg-gc-surface p-6 shadow-lg">
       <h2
         id="perm-modal-title"
-        class="text-base font-medium"
+        class="text-base font-medium text-gc-text"
       >
         Manage permissions
       </h2>
-      <p class="mt-1 text-sm text-gray-600">
+      <p class="mt-1 text-sm text-gc-muted">
         {{ user.email }}
       </p>
 
       <div
         v-if="isSelf"
-        class="mt-4 rounded-md bg-amber-50 p-3 text-sm text-amber-900"
+        class="mt-4 rounded-lg border border-amber-500/40 bg-amber-500/10 p-3 text-sm text-amber-100"
       >
         You cannot change your own roles from here.
       </div>
@@ -110,30 +111,30 @@ function handleSave() {
         v-else
         class="mt-4 space-y-3"
       >
-        <label class="flex items-center gap-2 text-sm">
+        <label class="flex items-center gap-2 text-sm text-gc-text">
           <input
             type="checkbox"
-            class="rounded border-gray-300"
+            class="rounded border-gc-border bg-gc-bg"
             :checked="adminChecked"
             :disabled="isSelf"
             @change="onAdminChange(($event.target as HTMLInputElement).checked)"
           >
           <span>Admin</span>
         </label>
-        <label class="flex items-center gap-2 text-sm">
+        <label class="flex items-center gap-2 text-sm text-gc-text">
           <input
             type="checkbox"
-            class="rounded border-gray-300"
+            class="rounded border-gc-border bg-gc-bg"
             :checked="superAdminChecked"
             :disabled="isSelf"
             @change="onSuperAdminChange(($event.target as HTMLInputElement).checked)"
           >
           <span>Super admin</span>
         </label>
-        <label class="flex items-center gap-2 text-sm">
+        <label class="flex items-center gap-2 text-sm text-gc-text">
           <input
             type="checkbox"
-            class="rounded border-gray-300"
+            class="rounded border-gc-border bg-gc-bg"
             :checked="staffChecked"
             :disabled="isSelf"
             @change="onStaffChange(($event.target as HTMLInputElement).checked)"
@@ -143,21 +144,21 @@ function handleSave() {
       </div>
 
       <div class="mt-6 flex justify-end gap-2">
-        <button
+        <GcButton
           type="button"
-          class="rounded-md border border-gray-300 px-3 py-1.5 text-sm hover:bg-gray-50"
+          variant="secondary"
           @click="handleClose"
         >
           Cancel
-        </button>
-        <button
+        </GcButton>
+        <GcButton
           type="button"
-          class="rounded-md bg-indigo-600 px-3 py-1.5 text-sm text-white hover:bg-indigo-700 disabled:opacity-50"
+          variant="primary"
           :disabled="isSelf"
           @click="handleSave"
         >
           Save
-        </button>
+        </GcButton>
       </div>
     </div>
   </div>

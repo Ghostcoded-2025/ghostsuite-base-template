@@ -2,12 +2,35 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <title>Base Template</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
     <meta name="description" content="Web application">
-    <meta name="theme-color" content="#111827">
-    <meta name="msapplication-TileColor" content="#111827">
+    <meta name="theme-color" content="#0a0a0b">
+    <meta name="msapplication-TileColor" content="#0a0a0b">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Base Template">
+    <script>
+      (function () {
+        try {
+          var theme = localStorage.getItem('gc-theme');
+          var root = document.documentElement;
+          if (theme === 'light') {
+            root.classList.add('theme-light');
+            root.style.colorScheme = 'light';
+          } else {
+            root.classList.add('theme-dark');
+            root.style.colorScheme = 'dark';
+          }
+        } catch (e) {
+          document.documentElement.classList.add('theme-dark');
+        }
+      })();
+    </script>
     <link rel="manifest" href="/manifest.webmanifest">
     <link rel="apple-touch-icon" href="/pwa-192.png">
   </head>

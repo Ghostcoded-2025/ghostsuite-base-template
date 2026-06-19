@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+
+import GcButton from '@/components/ui/GcButton.vue'
+import GcPasswordField from '@/components/ui/GcPasswordField.vue'
 import { authAPI } from '@/lib/auth'
 
 const router = useRouter()
@@ -30,18 +33,18 @@ const handleLogin = async () => {
 </script>
 
 <template>
-  <div class="flex min-h-screen items-center justify-center px-4 py-12">
+  <div class="flex min-h-dvh items-center justify-center px-4 py-12">
     <div class="w-full max-w-sm space-y-6">
       <div>
-        <h1 class="flex items-center gap-2 text-lg font-medium">
+        <h1 class="flex items-center gap-2 text-lg font-medium text-gc-text">
           <FontAwesomeIcon
             icon="right-to-bracket"
-            class="text-gray-700"
+            class="text-gc-muted"
             aria-hidden="true"
           />
           Sign in
         </h1>
-        <p class="mt-1 text-sm text-gray-600">
+        <p class="mt-1 text-sm text-gc-muted">
           Use the email and password for your account.
         </p>
       </div>
@@ -53,7 +56,7 @@ const handleLogin = async () => {
         <div>
           <label
             for="email"
-            class="block text-sm text-gray-700"
+            class="block text-sm text-gc-muted"
           >Email</label>
           <input
             id="email"
@@ -62,45 +65,46 @@ const handleLogin = async () => {
             name="email"
             autocomplete="email"
             required
-            class="mt-1 block w-full rounded border border-gray-300 px-3 py-2 text-sm"
+            class="mt-1 block w-full rounded-lg border border-gc-border bg-gc-bg px-3 py-2 text-sm text-gc-text placeholder:text-gc-muted"
           >
         </div>
         <div>
           <label
             for="password"
-            class="block text-sm text-gray-700"
+            class="block text-sm text-gc-muted"
           >Password</label>
-          <input
-            id="password"
-            v-model="password"
-            type="password"
-            name="password"
-            autocomplete="current-password"
-            required
-            class="mt-1 block w-full rounded border border-gray-300 px-3 py-2 text-sm"
-          >
+          <div class="mt-1">
+            <GcPasswordField
+              id="password"
+              v-model="password"
+              autocomplete="current-password"
+              required
+              dense
+            />
+          </div>
         </div>
 
         <p
           v-if="error"
-          class="text-sm text-red-600"
+          class="text-sm text-red-400"
         >
           {{ error }}
         </p>
 
-        <button
+        <GcButton
           type="submit"
+          variant="primary"
+          class="w-full"
           :disabled="isLoading"
-          class="w-full rounded border border-gray-900 bg-gray-900 px-3 py-2 text-sm text-white disabled:opacity-50"
         >
           {{ isLoading ? 'Signing in…' : 'Sign in' }}
-        </button>
+        </GcButton>
       </form>
 
-      <p class="text-center text-sm text-gray-600">
+      <p class="text-center text-sm text-gc-muted">
         <router-link
           to="/register"
-          class="underline"
+          class="text-gc-accent hover:underline"
         >
           Create an account
         </router-link>

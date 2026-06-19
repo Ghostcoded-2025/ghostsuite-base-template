@@ -11,14 +11,14 @@ const isLoading = computed(() => !rolesLoaded.value)
 </script>
 
 <template>
-  <div class="mx-auto max-w-3xl px-4 py-10">
-    <h1 class="text-lg font-medium">
+  <div class="mx-auto min-w-0 w-full max-w-3xl px-4 py-8 sm:py-10">
+    <h1 class="text-lg font-medium text-gc-text">
       Admin
     </h1>
 
     <div
       v-if="isLoading"
-      class="mt-6 text-sm text-gray-600"
+      class="mt-6 text-sm text-gc-muted"
     >
       Loading…
     </div>
@@ -30,7 +30,7 @@ const isLoading = computed(() => !rolesLoaded.value)
       <li v-if="isSuperAdmin">
         <router-link
           to="/admin/management"
-          class="text-indigo-600 hover:text-indigo-800"
+          class="text-gc-accent hover:underline"
         >
           Admin management
         </router-link>
@@ -38,7 +38,7 @@ const isLoading = computed(() => !rolesLoaded.value)
       <li>
         <router-link
           to="/dashboard"
-          class="text-gray-600 hover:text-gray-900"
+          class="text-gc-muted hover:text-gc-text"
         >
           Back to dashboard
         </router-link>
